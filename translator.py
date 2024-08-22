@@ -45,12 +45,11 @@ def parse_arguments():
 
 def translate(line, source_language, to_language, engine):
     translatedLine = ts.translate_text(
-        line,
-        str=engine,
+        query_text=line,
+        translator=engine,
         from_language=source_language,
         to_language=to_language,
     )
-    # print(f"Translating:\n {line.strip()} ->\n {translatedLine.strip()}")
     print(f"{translatedLine.strip()}")
     return translatedLine
 
@@ -83,7 +82,7 @@ def translate_file(file_path, output_path, source_language, to_language, engine)
     with open(output_path, "w", encoding="utf-8") as wf:
         with open(file_path, "r", encoding="utf-8") as rf:
             lines = rf.readlines()
-            batch_size = 30
+            batch_size = 32
             for i in range(0, len(lines), batch_size):
                 batch = lines[i:i + batch_size]
                 translatedLine = batch_translate(
