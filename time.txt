@@ -1,0 +1,10 @@
+./main -m models/ggml-tiny.en-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_tiny.en_coreml -t 8 -osrt 執行時間: 367 秒
+./main -m models/ggml-tiny-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_tiny_coreml -t 8 -osrt 執行時間: 564 秒
+./main -m models/ggml-base.en-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_base.en_coreml -t 8 -osrt 執行時間: 549 秒
+./main -m models/ggml-base-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_base_coreml -t 8 -osrt 執行時間: 387 秒
+./main -m models/ggml-small.en-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_small.en_coreml -t 8 -osrt 執行時間: 773 秒
+./main -m models/ggml-small-q5_1.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_small_coreml -t 8 -osrt 執行時間: 1179 秒
+./main -m models/ggml-medium.en-q5_0.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_medium.en_coreml -t 8 -osrt 執行時間: 2060 秒
+./main -m models/ggml-medium-q5_0.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_medium_coreml -t 8 -osrt 執行時間: 2183 秒
+./main -m models/ggml-large-v3-q5_0.bin -f ../Bullet_train.mp3.wav -of ../srt/Bullet_train_large-v3_coreml -t 8 -osrt 執行時間: 6849 秒
+
