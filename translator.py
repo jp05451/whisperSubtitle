@@ -17,7 +17,7 @@ def parse_arguments():
         "--to_language",
         type=str,
         help="The target language to be translated",
-        default="zh",
+        default="zh-Hant",
     )
     argparser.add_argument(
         "-e",
@@ -50,25 +50,32 @@ def translate(line, source_language, to_language, engine):
         from_language=source_language,
         to_language=to_language,
     )
-    print(f"Translating: {line.strip()} -> {translatedLine.strip()}")
+    # print(f"Translating:\n {line.strip()} ->\n {translatedLine.strip()}")
+    print(f"{translatedLine.strip()}")
     return translatedLine
 
 def is_subtitle(line):
     if line != '\n' and not line[0].isdigit():
-        return line
+        return True
+    return False
 
 
-# def batch_translate(lines, source_language, to_language, engine):
-#     """批量翻譯"""
-#     subtitles=""
-#     for line in lines:
-#         if(not is_subtitle(line)):
-#         subtitles = "".join(line)
+def batch_translate(lines, source_language, to_language, engine):
+    """批量翻譯"""
+    subtitles = ""
+    translated_lineNum = []
+    for i in range(len(lines)):
+        if(is_subtitle(lines[i])):
+            subtitles = subtitles+lines[i]
+            translated_lineNum.append(i)
 
-#     translated_line = translate(subtitles, source_language, to_language, engine)
-#     translated_lines = translated_line + "\n"
-
-#     return translated_lines
+    translated_lines=translate(subtitles, source_language, to_language, engine).split("\n")
+    
+    
+    for i in range(len(translated_lineNum)):
+        lines[translated_lineNum[i]] = translated_lines[i] + "\n"
+    
+    return lines
 
 
 def translate_file(file_path, output_path, source_language, to_language, engine):
@@ -76,14 +83,14 @@ def translate_file(file_path, output_path, source_language, to_language, engine)
     with open(output_path, "w", encoding="utf-8") as wf:
         with open(file_path, "r", encoding="utf-8") as rf:
             lines = rf.readlines()
-            # batch_size = 30
-            for i in range(2, len(lines), 4):
-                translatedLine = translate(
-                    lines[i], source_language, to_language, engine
+            batch_size = 30
+            for i in range(0, len(lines), batch_size):
+                batch = lines[i:i + batch_size]
+                translatedLine = batch_translate(
+                    batch, source_language, to_language, engine
                 )
-                wf.writelines(lines[i-2])
-                wf.writelines(lines[i-1])
-                wf.writelines(translatedLine + "\n\n")
+                
+                wf.writelines(translatedLine)
 
 
 
