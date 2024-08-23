@@ -50,11 +50,12 @@ def translate(line, source_language, to_language, engine):
         from_language=source_language,
         to_language=to_language,
     )
-    print(f"{translatedLine.strip()}")
+    print(f"{translatedLine}")
     return translatedLine
 
+
 def is_subtitle(line):
-    if line != '\n' and not line[0].isdigit():
+    if line != "\n" and not line[0].isdigit():
         return True
     return False
 
@@ -63,17 +64,22 @@ def batch_translate(lines, source_language, to_language, engine):
     """批量翻譯"""
     subtitles = ""
     translated_lineNum = []
+    
+    # connect all subtitles in a batch
     for i in range(len(lines)):
-        if(is_subtitle(lines[i])):
-            subtitles = subtitles+lines[i]
+        if is_subtitle(lines[i]):
+            
+            # split the subtitle by @
+            subtitles = subtitles + lines[i] + "@"
             translated_lineNum.append(i)
 
-    translated_lines=translate(subtitles, source_language, to_language, engine).split("\n")
-    
-    
+    translated_lines = translate(
+        subtitles, source_language, to_language, engine
+    ).split("@")
+
     for i in range(len(translated_lineNum)):
         lines[translated_lineNum[i]] = translated_lines[i] + "\n"
-    
+
     return lines
 
 
@@ -82,15 +88,15 @@ def translate_file(file_path, output_path, source_language, to_language, engine)
     with open(output_path, "w", encoding="utf-8") as wf:
         with open(file_path, "r", encoding="utf-8") as rf:
             lines = rf.readlines()
-            batch_size = 32
+            # translate in batch of 32 lines
+            batch_size = 1
             for i in range(0, len(lines), batch_size):
-                batch = lines[i:i + batch_size]
+                batch = lines[i : i + batch_size]
                 translatedLine = batch_translate(
                     batch, source_language, to_language, engine
                 )
-                
-                wf.writelines(translatedLine)
 
+                wf.writelines(translatedLine)
 
 
 def main():
