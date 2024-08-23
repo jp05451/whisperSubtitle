@@ -23,7 +23,7 @@ def parse_arguments():
         "-e",
         "--engine",
         type=str,
-        help="The translation engine to be used",
+        help="The translation engine to be used ex: alibaba, apertium, argos, baidu, bing, caiyun, cloudTranslation, deepl, elia, google, hujiang, iciba, iflytek, iflyrec, itranslate, judic, languageWire, lingvanex, mglip, mirai, modernMt, myMemory, niutrans, papago, qqFanyi,qqTranSmart,reverso,sogou, sysTran, tilde,    translateCom, translateMe, utibet, volcEngine, yandex, yeekit,youdao,",
         default="bing",
     )
     argparser.add_argument(
